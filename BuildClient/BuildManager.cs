@@ -35,8 +35,8 @@ namespace BuildClient
             Tracing.Server.TraceInformation("Server: StartProcessing (loop)");
 
             _lockExpiryTimer =
-                new Timer(PollBuildServer, null, Timeout.Infinite, Timeout.Infinite);
-            _lockExpiryTimer.Change(0, Timeout.Infinite);
+                new Timer(PollBuildServer, null, Timeout.Infinite, GetPollingPeriod());
+            _lockExpiryTimer.Change(0, GetPollingPeriod());
         }
 
         private int GetPollingPeriod()
@@ -55,7 +55,8 @@ namespace BuildClient
                     () =>
                         Tracing.Client.TraceInformation(
                             "Getting list of build store events"),
-                    () => _lockExpiryTimer.Change(DueTime, GetPollingPeriod())
+                    () => { }
+                    //() => _lockExpiryTimer.Change(DueTime, GetPollingPeriod())
                     );
             }
             catch (Exception exception)

@@ -49,7 +49,7 @@ namespace BuildClient
                 var builder = new ContainerBuilder();
                 builder.RegisterType<BuildConfigurationManager>().As<IBuildConfigurationManager>();
                 builder.RegisterType<Notifier>().As<INotifier>();
-                builder.RegisterType<TfsBridge>().As<IBuildEventSystem>();
+                builder.RegisterType<VsoBridge>().As<IBuildEventSystem>();
                 builder.RegisterType<BuildStoreEventSource>().As<IBuildStoreEventSource>().SingleInstance();
                 builder.Register(c => new TfsServiceProvider(c.Resolve<IBuildConfigurationManager>().TeamFoundationUrl,c.Resolve<IBuildConfigurationManager>()))
                        .As<IServiceProvider>().SingleInstance();
